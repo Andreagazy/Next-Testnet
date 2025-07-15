@@ -151,9 +151,18 @@ export default function TestPage() {
                                     <div className="space-y-1">
                                         <label className="text-xs font-medium">Value (ETH)</label>
                                         <Input
+                                            type="number"
+                                            step="0.001"
+                                            min="0.001"
                                             placeholder="e.g. 0.05"
                                             value={value}
-                                            onChange={(e) => setValue(e.target.value)}
+                                            onChange={(e) => {
+                                                const val = e.target.value;
+                                                // Hanya angka dan titik
+                                                if (/^\d*\.?\d*$/.test(val)) {
+                                                    setValue(val);
+                                                }
+                                            }}
                                             required
                                         />
                                     </div>
