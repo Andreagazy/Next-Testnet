@@ -121,18 +121,18 @@ export default function TestPage() {
                                     </div>
                                     {/* Balance */}
                                     <div className="space-y-1">
-                                        <label className="text-xs font-medium">Balance (ETH)</label>
+                                        <label className="text-xs font-medium">Balance (Optional)</label>
                                         <Input
                                             type="number"
                                             step="0.001"
                                             min="0"
-                                            placeholder="e.g. 0.1"
+                                            placeholder="e.g. 0.1 "
                                             value={newBalance}
                                             onChange={(e) => {
                                                 const val = e.target.value;
                                                 if (/^\d*\.?\d*$/.test(val)) setNewBalance(val);
                                             }}
-                                            required
+                                            
                                         />
                                     </div>
 
