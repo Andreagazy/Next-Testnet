@@ -22,6 +22,7 @@ export default function TestPage() {
     const [value, setValue] = useState("");
     const [addingNew, setAddingNew] = useState(false);
     const [newContractName, setNewContractName] = useState("");
+    const [newBalance, setNewBalance] = useState("");
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -40,9 +41,10 @@ export default function TestPage() {
         const newId = smartContracts.length + 1;
         setSmartContracts([
             ...smartContracts,
-            { id: newId, name: newContractName },
+            { id: newId, name: `${newContractName} (Balance: ${newBalance} ETH)` }, // Optional
         ]);
         setNewContractName("");
+        setNewBalance("");
         setAddingNew(false);
     };
 
@@ -74,8 +76,8 @@ export default function TestPage() {
                                     <Card
                                         key={contract.id}
                                         className={`p-4 cursor-pointer border transition-all ${selected === contract.id
-                                                ? "border-blue-600 bg-blue-50 shadow"
-                                                : "hover:bg-gray-100 border-gray-200"
+                                            ? "border-blue-600 bg-blue-50 shadow"
+                                            : "hover:bg-gray-100 border-gray-200"
                                             }`}
                                         onClick={() => {
                                             setSelected(contract.id);
@@ -84,8 +86,8 @@ export default function TestPage() {
                                     >
                                         <h3
                                             className={`font-medium text-sm ${selected === contract.id
-                                                    ? "text-blue-700"
-                                                    : "text-gray-800"
+                                                ? "text-blue-700"
+                                                : "text-gray-800"
                                                 }`}
                                         >
                                             {contract.name}
@@ -107,6 +109,7 @@ export default function TestPage() {
                                     <h2 className="text-md font-bold mb-2 text-center">
                                         Add New Smart Contract
                                     </h2>
+                                    {/* Name */}
                                     <div className="space-y-1">
                                         <label className="text-xs font-medium">Contract Name</label>
                                         <Input
@@ -116,7 +119,27 @@ export default function TestPage() {
                                             required
                                         />
                                     </div>
-                                    <Button type="submit" className="w-full bg-green-600 text-white">
+                                    {/* Balance */}
+                                    <div className="space-y-1">
+                                        <label className="text-xs font-medium">Balance (ETH)</label>
+                                        <Input
+                                            type="number"
+                                            step="0.001"
+                                            min="0"
+                                            placeholder="e.g. 0.1"
+                                            value={newBalance}
+                                            onChange={(e) => {
+                                                const val = e.target.value;
+                                                if (/^\d*\.?\d*$/.test(val)) setNewBalance(val);
+                                            }}
+                                            required
+                                        />
+                                    </div>
+
+                                    <Button
+                                        type="submit"
+                                        className="w-full bg-green-600 text-white"
+                                    >
                                         Add Contract
                                     </Button>
                                 </form>
@@ -136,9 +159,9 @@ export default function TestPage() {
                                     className="bg-white border shadow-md rounded-lg p-4 space-y-4 w-full max-w-sm"
                                 >
                                     <h2 className="text-md font-bold mb-2 text-center">
-                                        {" "}
                                         {smartContracts.find((c) => c.id === selected)?.name}
                                     </h2>
+                                    {/* Address */}
                                     <div className="space-y-1">
                                         <label className="text-xs font-medium">Address</label>
                                         <Input
@@ -148,6 +171,7 @@ export default function TestPage() {
                                             required
                                         />
                                     </div>
+                                    {/* Value */}
                                     <div className="space-y-1">
                                         <label className="text-xs font-medium">Value (ETH)</label>
                                         <Input
@@ -158,15 +182,15 @@ export default function TestPage() {
                                             value={value}
                                             onChange={(e) => {
                                                 const val = e.target.value;
-                                                // Hanya angka dan titik
-                                                if (/^\d*\.?\d*$/.test(val)) {
-                                                    setValue(val);
-                                                }
+                                                if (/^\d*\.?\d*$/.test(val)) setValue(val);
                                             }}
                                             required
                                         />
                                     </div>
-                                    <Button type="submit" className="w-full bg-blue-600 text-white">
+                                    <Button
+                                        type="submit"
+                                        className="w-full bg-blue-600 text-white"
+                                    >
                                         Send Transaction
                                     </Button>
                                 </form>
