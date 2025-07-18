@@ -29,6 +29,7 @@ export default function TestPage() {
     const [errorMessage, setErrorMessage] = useState("");
     const [reason, setReason] = useState("");
 
+
     useEffect(() => {
         fetchContracts();
     }, []);
@@ -76,7 +77,7 @@ export default function TestPage() {
             setValue("");
             setReason("");
 
-            await fetchContracts(); // <--- ini ditambahkan
+            await fetchContracts();
         } catch (error: any) {
             const err = error?.response?.data?.message || error?.message || "Failed to send transaction.";
             console.error("Transaction Error:", error);
